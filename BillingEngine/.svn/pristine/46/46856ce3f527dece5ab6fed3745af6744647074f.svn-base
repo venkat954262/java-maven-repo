@@ -1,0 +1,993 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>APSFL Bill Document</title>
+<style>
+body { background-image:url(logo(1).png); background-repeat:repeat; 
+    margin: 0;
+    padding: 0;
+    background-color: #FAFAFA;
+    font: 11px "Arial";
+}
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.page {
+    width: 21cm;
+    min-height: 29.7cm;
+    padding: 1cm;
+    margin: 1cm auto;
+    border: 1px #fffff solid;
+    border-radius: 1px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.subpage {
+    padding: 0.5cm;
+    border: 2px #E7E7E7 solid;
+    height: 256mm;
+    outline:1cm #ffffff solid;
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+@media print {
+    .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: always;
+    }
+}
+.mainbody {
+    height:200mm;
+    width:15.cm;
+    
+}
+
+label {
+	font-weight: bold;
+	font-size: 13px;
+}
+.intext{ padding-left:5px;  border-left:solid; border-left-width:1px;}
+.showtext{ padding-right:5px; text-align:right; border-left:solid; border-left-width:1px;}
+.midtext{ padding:5px; text-align:center;}
+.header {
+    height: 90px;
+    padding: 0px;
+}
+table
+{
+   border-collapse:collapse;
+}
+tr
+{
+   border-bottom: 1px solid #000;
+}
+tr:last-child
+{
+   border-bottom: none;
+}
+
+#macro( processSimpleData $data )
+ #if ($StringUtils.isNotEmpty($data))
+      $data
+    #else
+      
+    #end
+#end
+#macro( processData $data )
+ #if ($StringUtils.isNotEmpty($data))
+		$data
+    #else
+		-
+    #end
+#end
+</style>
+</head>
+
+<body>
+<div class="book">
+	<div class="page">
+        <div class="subpage">
+			<div class="header">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tbody>
+			<tr>
+			  <td><img src="data: image/png;base64, $image_content " width="200" height="76" alt=""/></td>
+			  <td style="text-align:center; font-family:arial; font-size:16px; font-weight:bold;">Andhra Pradesh State Fibernet Ltd.<br>
+					<span style="text-align:center; font-family:arial; font-size:14px; font-weight:bold;">( A Govt. of A.P Enterprise )</span></td>
+			  <td align="left" valign="top"><img src="data: image/png;base64, $image_content_1"  width="200" height="66" alt=""/></td>
+			</tr>
+		  </tbody>
+			</table>
+			</div>
+			
+		<div class="mainbody">
+			 <table width="100%" border="1px" cellspacing="0" cellpadding="0" class="table">
+		<tr>
+			<td colspan="5" align="center"><b>Account Summary</b></td>
+
+		</tr>
+		<tr>
+			<td rowspan="6" class="intext" width="430px">
+				<h4 >Name And Address of Customer</h4>
+				<p>
+					       #processSimpleData( $bill.fullName )
+			<br>
+					      #processSimpleData( $bill.address )
+			<br> 
+					Telephone Number:        -
+    				</p>
+			</td>
+			<td class="intext">#if( $custType== 'E')Enterprise#end Customer ID</td>
+			<td class="intext">#processData( $bill.enterpriseCustomerId )</td>
+    	</tr>
+		<tr>
+			<td class="intext">Payment Customer ID</td>
+			<td class="intext">#processData( $bill.paymentCustomerId )</td>
+    		</tr>
+		<tr>
+			<td class="intext">Phone Number</td>
+			<td class="intext">-</td>
+    		</tr>
+		<tr>
+			<td class="intext">Bill Number & Date</td>
+			<td class="intext">
+				#processSimpleData( $bill.billNumber ) - #processSimpleData( $bill.billDate )
+    		</td>
+		</tr>
+		<tr>
+			<td class="intext">Bill Period</td>
+			<td class="intext">#processData( $bill.billFromDate) to #processData( $bill.billToDate)</td>
+    		</tr>
+		<tr>
+			<td class="intext">Payment Due Date</td>
+			<td class="intext">#processData( $bill.dueDate )</td>
+    		</tr>
+		</table>
+		<br><table width="100%" border="1" cellspacing="0" cellpadding="0" class="table">
+		<tr>
+			<td colspan="6"
+				style="padding-left: 5px; font-size: 12px; font-weight: bold; background-color: #dddddd">Payment
+				Details</td>
+		</tr>
+		<tr>
+			<td class="intext"><b>Previous Balance</b></td>
+			<td class="intext"><b>Last Payment</b></td>
+			<td class="intext"><b>Balance Amount</b></td>
+			<td class="intext"><b>Adjustments</b></td>
+			<td class="intext"><b>Current Bill Amount</b></td>
+			<td class="intext"><b>Amount Payable</b></td>
+		</tr>
+		<tr>
+			<td class="intext">A</td>
+			<td class="intext">B</td>
+			<td class="intext">C=A-B</td>
+			<td class="intext">D</td>
+			<td class="intext">E</td>
+			<td class="intext">E+C-D</td>
+		</tr>
+		<tr>
+			<td class="intext"> $bill.prevBalance </td>
+			<td class="intext"> $bill.lastPayment </td>
+			<td class="intext"> $bill.balanceAmount </td>
+			<td class="intext"> $bill.adjustments </td>
+			<td class="intext"> $bill.currentBillAmount </td>
+			<td class="intext"> $bill.amountPayable </td>
+		</tr>
+	</table>
+	<br><table width="100%" border="1" cellspacing="0" cellpadding="0" class="table">
+		<tr>
+			<td colspan="4"
+				style="padding-left: 5px; font-size: 12px; font-weight: bold; background-color: #dddddd">Last Payment</td>
+		</tr>
+		<tr>
+			<td class="intext"><b>Account Number</b></td>
+			<td class="intext"><b>Description</b></td>
+			<td class="intext"><b>Date</b></td>
+			<td class="intext"><b>Amount</b></td>
+		</tr>
+		#foreach( $payments in $bill.payments )
+        <tr>
+        	<td class="intext">$payments.cafno</td>
+			<td class="intext">$payments.description</td>
+			<td class="intext">$payments.date</td>
+			<td class="intext">$payments.amount</td>
+		</tr>
+		#end
+			</table>
+			
+		</div>
+	</div>
+	</div>
+	 #foreach( $allAccountCurrentCharges in $bill.allAccountCurrentCharges )
+		#if( $velocityCount % 30 == 0 || $velocityCount==1)
+		#if( $velocityCount % 30 == 0)
+					</table><br>
+</table>
+<br><br><br><br>
+		  </div>
+   </div>    
+    </div>
+	#end
+    <div class="page">
+	   
+        <div class="subpage">
+			<div class="header">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tbody>
+			<tr>
+			  <td><img src="data: image/png;base64, $image_content " width="200" height="76" alt=""/></td>
+			  <td style="text-align:center; font-family:arial; font-size:16px; font-weight:bold;">Andhra Pradesh State Fibernet Ltd.<br>
+					<span style="text-align:center; font-family:arial; font-size:14px; font-weight:bold;">( A Govt. of A.P Enterprise )</span></td>
+			  <td align="left" valign="top"><img src="data: image/png;base64, $image_content_1"  width="200" height="66" alt=""/></td>
+			</tr>
+		  </tbody>
+			</table>
+			</div>
+			
+		<div class="mainbody">
+       <table width="100%" border="1px" cellspacing="0" cellpadding="0" class="table">
+		<tr>
+			<td colspan="5" align="center"><b>Account Summary</b></td>
+
+		</tr>
+		<tr>
+			<td rowspan="6" class="intext" width="430px">
+				<h4 >Name And Address of Customer</h4>
+				<p>
+					       #processSimpleData( $bill.fullName )
+			<br>
+					      #processSimpleData( $bill.address )
+			<br> 
+					Telephone Number:        -
+    				</p>
+			</td>
+			<td class="intext">#if( $custType== 'E')Enterprise#end Customer ID</td>
+			<td class="intext">#processData( $bill.enterpriseCustomerId )</td>
+    	</tr>
+		<tr>
+			<td class="intext">Payment Customer ID</td>
+			<td class="intext">#processData( $bill.paymentCustomerId )</td>
+    		</tr>
+		<tr>
+			<td class="intext">Phone Number</td>
+			<td class="intext">-</td>
+    		</tr>
+		<tr>
+			<td class="intext">Bill Number & Date</td>
+			<td class="intext">
+				#processSimpleData( $bill.billNumber ) - #processSimpleData( $bill.billDate )
+    		</td>
+		</tr>
+		<tr>
+			<td class="intext">Bill Period</td>
+			<td class="intext">#processData( $bill.billFromDate) to #processData( $bill.billToDate)</td>
+    		</tr>
+		<tr>
+			<td class="intext">Payment Due Date</td>
+			<td class="intext">#processData( $bill.dueDate )</td>
+    		</tr>
+		</table>
+		<br><table width="100%" border="1" cellspacing="0" cellpadding="0" class="table">
+		<tr>
+			<td colspan="5" class="midtext" style="padding-left: 5px; font-size: 12px; font-weight: bold; background-color: #dddddd"><b>
+				Summary of Current Charges - All Accounts</b></td>
+		</tr>
+		<tr>
+			<td class="intext"><b>Account Number</b></td>
+			<td class="intext"><b>Account Name</b></td>
+			<td class="intext"><b>Amount(Rs.)</b></td>
+			<td class="intext"><b>Tax (Rs.)</b></td>
+			<td class="intext"><b>Total Amount (Rs.)</b></td>
+		</tr>
+		
+      #end
+		<tr>
+			<td class="intext">$allAccountCurrentCharges.accountNumber</td>
+    		<td class="intext">$allAccountCurrentCharges.accountName</td>
+			<td class="intext">$allAccountCurrentCharges.amount</td>
+			<td class="intext">$allAccountCurrentCharges.tax</td>
+			<td class="intext">$allAccountCurrentCharges.totalAmount</td>
+    	</tr>
+		
+			#if($foreach.last)
+				<tr>
+			<td class="intext">Total Charges (Rs.)</td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext">$bill.allAccountCurrentChargesTotalAmount</td>
+			<td class="intext">$bill.allAccountCurrentChargesTotalTax</td>
+			<td class="intext">$bill.allAccountCurrentChargesTotalofTotalAmount</td>
+		</tr>
+		<tr>
+			<td class="intext"><b>Tax Details Description</b></td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext"><b>Amount (Rs.)</b></td>
+		</tr>
+		<tr>
+			<td class="intext">Service Tax (14%)</td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext">$bill.serviceTax</td>
+		</tr>
+		<tr>
+			<td class="intext">Swachh Bharat Cess + Krishi Kalyan Cess</td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext">$bill.otherTax</td>
+		</tr>
+		<tr>
+			<td class="intext">Entertainment Tax</td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext">&nbsp;</td>
+			<td class="intext">$bill.entTax</td>
+		</tr>
+		#if( $velocityCount % 30 != 0)
+							</table><br>
+</table>
+<br><br><br><br>
+		  </div>
+   </div>    
+    </div>
+	#end
+		#end
+		<!-- <tr>
+			<td colspan="5" class="midtext"> <br><b>Accounts Officer (TR)
+				"Please pay current bill amount only, if the previous bill amount has already been paid."</b>
+				<br><br>
+				This is a computer generated bill and hence does not require any Signature.
+		 	</td> 
+		</tr> -->
+
+<!-- <table width="100%" border="1" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td style=" text-align:center; padding:5px; font-size: 14px; font-weight: bold; background-color: #dddddd">Payment Slip</td>
+    </tr>
+    <tr>
+      <td style="padding:5px;"><table width="100%" border="1" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td width="150px" class="intext">Payment Customer ID</td>
+      <td width="150px" class="intext">$bill.paymentCustomerId</td>
+      <td width="1px"></td>
+      <td width="150px" class="intext">Bill Date</td>
+      <td width="150px" class="intext">$bill.billDate</td>
+    </tr>
+    <tr>
+      <td class="intext">Phone Number</td>
+      <td class="intext">$bill.phoneNumber</td>
+      <td></td>
+      <td class="intext">Payment Due Date</td>
+      <td class="intext">$bill.dueDate</td>
+    </tr>
+    <tr>
+      <td class="intext">Bill Number</td>
+      <td class="intext">$bill.billNumber</td>
+      <td></td>
+      <td class="intext">Amount Due</td>
+      <td class="intext">$bill.amountPayable</td>
+    </tr>
+  </tbody>
+</table>
+</td>
+    </tr>
+    <tr>
+      <td style="padding:5px;"><table width="100%" border="1" cellspacing="0" cellpadding="0">
+        <tbody>
+          <tr>
+            <td class="intext" width="16%">Bill Date </td>
+            <td class="intext" width="16%">$bill.billDate</td>
+            <td class="intext" width="16%">Due On</td>
+            <td class="intext" width="16%">$bill.dueDate</td>
+            <td class="intext" width="16%">Amount Paid</td>
+            <td class="intext" width="20%">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="6" class="midtext"><b>This bill is generated by APSFL</b></td>
+          </tr>
+        </tbody>
+      </table></td>
+    </tr>
+    
+  </tbody>
+</table> -->
+
+#end
+
+	
+#foreach( $subbill in $bill.individualBillInfoList )
+
+    <div class="page">
+        <div class="subpage"><div class="header">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td><img src="data: image/png;base64, $image_content " width="200" height="76" alt=""/></td>
+      <td style="text-align:center; font-family:arial; font-size:16px; font-weight:bold;">Andhra Pradesh State Fibernet Ltd.<br>
+			<span style="text-align:center; font-family:arial; font-size:14px; font-weight:bold;">( A Govt. of A.P Enterprise )</span></td>
+	  <td align="left" valign="top"><img src="data: image/png;base64, $image_content_1"  width="200" height="66" alt=""/></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+    <div class="mainbody">
+       <table width="100%" border="1px" cellspacing="0" cellpadding="0" class="table">
+		<tr>
+			<td colspan="5" align="center"><b>Bill</b></td>
+
+		</tr>
+		<tr>
+			<td rowspan="6" class="intext" width="430px">
+				<h4 >Name And Address of Customer</h4>
+				<p>
+					       #processSimpleData( $subbill.fullName )
+     <br>
+					      #processSimpleData( $subbill.address )
+     <br> 
+					Telephone Number:        #processSimpleData( $subbill.phoneNumber )
+    				</p>
+			</td>
+			<td class="intext">#if( $custType== 'E')Enterprise#end Customer ID</td>
+			<td class="intext">#processData( $bill.enterpriseCustomerId )</td>
+    		</tr>
+		<tr>
+			<td class="intext">Payment Customer ID</td>
+			<td class="intext">#processData( $bill.paymentCustomerId )</td>
+    		</tr>
+		<tr>
+			<tr>
+			<td class="intext">Account Number</td>
+			<td class="intext">#processData( $subbill.accountNumber )</td>
+    		</tr>
+		<tr>
+			<td class="intext">Phone Number</td>
+			<td class="intext">#processData( $subbill.phoneNumber )</td>
+    		</tr>
+	</table><br><br><table width="100%" border="1px" cellspacing="0" cellpadding="0">
+		<tr>
+			<td colspan="2" style="padding-left: 5px; font-size: 12px; font-weight: bold; background-color: #dddddd">
+				Package Details</td>
+		</tr>
+		<tr>
+			<th class="intext">Description</th>
+			<th class="intext">Installation Date</th>
+		</tr>
+		#foreach( $packages in $subbill.packages )
+		<tr>
+			<td class="intext">$packages.description</td>
+    		<td class="intext">$packages.date</td>
+    	</tr>
+		#end
+			</table><br></td>
+      <td><table  width="100%" border="1px" cellspacing="0" cellpadding="0" >
+		<tr>
+			<th class="intext">Summary of Current Charges</th>
+			<th class="intext">Amount (Rs.)</th>
+		</tr>
+		 #set( $summary = $subbill.summary)
+		 #set( $tax = $subbill.taxDTO)
+		<tr>
+			<td class="intext">Monthly Charges</td>
+			<td class="showtext">$summary.recurringCharges</td>
+		</tr>
+		<tr>
+			<td class="intext">Telephone Usage Charges</td>
+			<td class="showtext">$summary.usageCharges</td>
+		</tr>
+		<tr>
+			<td class="intext">One Time Charges</td>
+			<td class="showtext">$summary.onetimeCharges</td>
+		</tr>
+		<tr>
+			<td class="intext">Discounts / Adjustments</td>
+			<td class="showtext">$summary.discountsOrAdjustments</td>
+		</tr>
+		<tr>
+			<td class="intext">Total Tax</td>
+			<td class="showtext">$summary.totalTax</td>
+		</tr>
+		<tr>
+			<td class="intext">Late Fee</td>
+			<td class="showtext">$summary.lateFee</td>
+		</tr>
+		<tr>
+			<td class="intext">Total Charges (Rs.)</td>
+			<td class="showtext">$summary.getTotalCharges()</td>
+		</tr>
+		<tr>
+			<td class="intext"><span style="font-weight: bold">Tax Details
+					Description</span></td>
+			<td class="intext"><span style="font-weight: bold">Amount (Rs.)</span></td>
+		</tr>
+		<tr>
+			<td class="intext">Service Tax (14%)</td>
+			<td class="showtext">$tax.serviceTax</td>
+		</tr>
+		<tr>
+			<td class="intext">Swachh Bharat Cess + Krishi Kalyan Cess</td>
+			<td class="showtext">$tax.allTax</td>
+		</tr>
+		<tr>
+			<td class="intext">Entertainment Tax</td>
+			<td class="showtext">$tax.enttax</td>
+		</tr>
+	</table></td>
+    </tr>
+  </tbody>
+</table>
+<br><br><br><br>
+    </div>
+   </div>  
+   </div>  	
+	
+	
+	
+    <div class="page">
+        <div class="subpage"><div class="header">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td><img src="data: image/png;base64, $image_content " width="200" height="76" alt=""/></td>
+      <td style="text-align:center; font-family:arial; font-size:16px; font-weight:bold;">Andhra Pradesh State Fibernet Ltd.<br>
+			<span style="text-align:center; font-family:arial; font-size:14px; font-weight:bold;">( A Govt. of A.P Enterprise )</span></td>
+	  <td align="left" valign="top"><img src="data: image/png;base64, $image_content_1"  width="200" height="66" alt=""/></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+    <div class="mainbody">
+       <table width="100%" border="1px" cellspacing="0" cellpadding="0" class="table">
+		<tr>
+			<td colspan="5" align="center"><b>Bill</b></td>
+
+		</tr>
+		<tr>
+			<td rowspan="6" class="intext" width="430px">
+				<h4 >Name And Address of Customer</h4>
+				<p>
+					       #processSimpleData( $subbill.fullName )
+     <br>
+					      #processSimpleData( $subbill.address )
+     <br> 
+					Telephone Number:        #processSimpleData( $subbill.phoneNumber )
+    				</p>
+			</td>
+			<td class="intext">#if( $custType== 'E')Enterprise#end Customer ID</td>
+			<td class="intext">#processData( $bill.enterpriseCustomerId )</td>
+    		</tr>
+		<tr>
+			<td class="intext">Payment Customer ID</td>
+			<td class="intext">#processData( $bill.paymentCustomerId )</td>
+    		</tr>
+		<tr>
+			<tr>
+			<td class="intext">Account Number</td>
+			<td class="intext">#processData( $subbill.accountNumber )</td>
+    		</tr>
+		<tr>
+			<td class="intext">Phone Number</td>
+			<td class="intext">#processData( $subbill.phoneNumber )</td>
+    		</tr>
+	</table>
+    <br><br>
+    <table width="100%" border="1" cellspacing="0" cellpadding="0">
+		<tr>
+			<td colspan="6"
+				style="padding-left: 5px; font-size: 12px; font-weight: bold; background-color: #dddddd">Monthly Charges</td>
+		</tr>
+		<tr>
+			<th class="intext">Sr. No</th>
+			<th class="intext">Description</th>
+			<th class="intext">Charge Type</th>
+			<th class="intext">Start Date</th>
+			<th class="intext">End Date</th>
+			<th class="intext">Charges (Rs.)</th>
+		</tr>
+		#set( $count = 1)
+		#foreach( $recCharges in $subbill.recurringCharges )
+		<tr>
+			<td class="intext">$count</td>
+			<td class="intext">$recCharges.description</td>
+			<td class="intext">$recCharges.chargeType</td>
+			<td class="intext">$recCharges.startDate</td>
+			<td class="intext">$recCharges.endDate</td>
+			<td class="intext">$recCharges.charges</td>
+			#set( $count = $count + 1 )
+		</tr>
+		#end
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="intext">Total</td>
+			<td class="intext">$subbill.getTotalRecurringCharges()</td>
+		</tr>
+	</table><br><label 
+		style="font-size: 14px; font-weight: bold">Internet</label>
+	<br>
+	<table width="100%" border="1" cellspacing="0" cellpadding="0">
+		<tr>
+			<td colspan="4"
+				style="padding-left: 5px; font-size: 12px; font-weight: bold; background-color: #dddddd">Data
+				Usage</td>
+		</tr>
+		<tr>
+		    <th class="intext">S.No</th>
+			<th class="intext">Description</th>
+			<th class="intext">Units (MB)</th>
+			<th class="intext">Duration (HH:MM:SS)</th>
+		</tr>
+		#set( $count = 1)
+		#foreach( $dataUsage in $subbill.dataUsages )
+		<tr>
+			<td class="intext">$count</td>
+			<td class="intext">$dataUsage.descr</td>
+			<td class="intext">$dataUsage.units</td>
+			<td class="intext">$dataUsage.duration</td>
+			#set( $count = $count + 1 )
+		</tr>
+		#end
+			</table><br>
+    </div>
+    </div></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div class="header">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td><img src="data: image/png;base64, $image_content " width="200" height="76" alt=""/></td>
+      <td style="text-align:center; font-family:arial; font-size:16px; font-weight:bold;">Andhra Pradesh State Fibernet Ltd.<br>
+			<span style="text-align:center; font-family:arial; font-size:14px; font-weight:bold;">( A Govt. of A.P Enterprise )</span></td>
+	  <td align="left" valign="top"><img src="data: image/png;base64, $image_content_1"  width="200" height="66" alt=""/></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+    <div class="mainbody">
+       <table width="100%" border="1px" cellspacing="0" cellpadding="0" class="table">
+		<tr>
+			<td colspan="5" align="center"><b>Bill</b></td>
+
+		</tr>
+		<tr>
+			<td rowspan="6" class="intext" width="430px">
+				<h4 >Name And Address of Customer</h4>
+				<p>
+					       #processSimpleData( $subbill.fullName )
+     <br>
+					      #processSimpleData( $subbill.address )
+     <br> 
+					Telephone Number:        #processSimpleData( $subbill.phoneNumber )
+    				</p>
+			</td>
+			<td class="intext">#if( $custType== 'E')Enterprise#end Customer ID</td>
+			<td class="intext">#processData( $bill.enterpriseCustomerId )</td>
+    		</tr>
+		<tr>
+			<td class="intext">Payment Customer ID</td>
+			<td class="intext">#processData( $bill.paymentCustomerId )</td>
+    		</tr>
+		<tr>
+			<tr>
+			<td class="intext">Account Number</td>
+			<td class="intext">#processData( $subbill.accountNumber )</td>
+    		</tr>
+		<tr>
+			<td class="intext">Phone Number</td>
+			<td class="intext">#processData( $subbill.phoneNumber )</td>
+    		</tr>
+	</table>
+    <br>
+    <label class="subtitle" style="padding-left: 5px; font-size: 13px; font-weight: bold;">Other Charges / Discounts & Adjustments</label>
+	<br>
+	<table width="100%" border="1" cellspacing="0" cellpadding="0">
+		<tr style="background-color: #dddddd;">
+			<td colspan="4" style="padding-left: 5px; font-size: 13px; font-weight: bold; background-color: #dddddd">VOD / Movie Charges</td>
+		</tr>
+		<tr>
+			<th >Sr. No</th>
+			<th>VOD/ Movie Name</th>
+			<th>Date</th>
+			<th>Charges(Rs.)</th>
+		</tr>
+        #set($count = 1)
+		#foreach( $vodCharges in $subbill.vodOrMovieCharges )
+		<tr>
+			<td>$count</td>
+			<td>#processData($vodCharges.vodName)</td>
+			<td>$vodCharges.date</td>
+			<td>$vodCharges.charges</td>
+			#set($count = $count+1)
+		</tr>
+		#end
+					</table><br>
+	
+	<table width="100%" border="1" cellspacing="0" cellpadding="0">
+		<tr style="background-color: #dddddd;">
+			<td colspan="4" style="padding-left: 5px; font-size: 13px; font-weight: bold; background-color: #dddddd">Onetime Charges</td>
+		</tr>
+		<tr>
+			<th>Sr. No</th>
+			<th>Description</th>
+			<th>Date</th>
+			<th>Charges(Rs.)</th>
+		</tr>
+        #set($count = 1)
+		#foreach( $onetimeCharges in $subbill.onetimeCharges )
+		<tr>
+			<td class="intext">$count</td>
+			<td class="intext">$onetimeCharges.description</td>
+			<td class="intext">$onetimeCharges.date</td>
+			<td class="intext">$onetimeCharges.charges</td>
+			#set($count = $count+1)
+		</tr>
+		#end
+		<tr>
+			<td></td>
+			<td></td>
+			<td class="intext">Total</td>
+			<td class="intext">$subbill.getTotalOneTimeCharges()</td>
+		</tr>
+			</table><br><table width="100%" border="1" cellspacing="0" cellpadding="0">
+		<tr >
+			<td colspan="4" style="padding-left: 5px; font-size: 13px; font-weight: bold; background-color: #dddddd">Discounts / Adjustments</td>
+		</tr>
+		<tr>
+			<th>Sr. No</th>
+			<th>Description</th>
+			<th>Date</th>
+			<th>Amount (Rs.)</th>
+		</tr>
+        #set($count = 1)
+		#foreach( $discOrAdjustemnts in $subbill.discOrAdjustemnts )
+		<tr>
+			<td>$count</td>
+			<td>$discOrAdjustemnts.description</td>
+			<td>$discOrAdjustemnts.date</td>
+			<td>$discOrAdjustemnts.charges</td>
+			#set($count = $count+1)
+		</tr>
+		#end
+					</table>
+    </div>
+       
+    </div>
+    </div>
+    <div class="page">
+        <div class="subpage"><div class="header">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td><img src="data: image/png;base64, $image_content " width="200" height="76" alt=""/></td>
+      <td style="text-align:center; font-family:arial; font-size:16px; font-weight:bold;">Andhra Pradesh State Fibernet Ltd.<br>
+			<span style="text-align:center; font-family:arial; font-size:14px; font-weight:bold;">( A Govt. of A.P Enterprise )</span></td>
+	  <td align="left" valign="top"><img src="data: image/png;base64, $image_content_1"  width="200" height="66" alt=""/></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+    <div class="mainbody">
+       <table width="100%" border="1px" cellspacing="0" cellpadding="0" class="table">
+		<tr>
+			<td colspan="5" align="center"><b>Bill</b></td>
+
+		</tr>
+		<tr>
+			<td rowspan="6" class="intext" width="430px">
+				<h4 >Name And Address of Customer</h4>
+				<p>
+					       #processSimpleData( $subbill.fullName )
+     <br>
+					      #processSimpleData( $subbill.address )
+     <br> 
+					Telephone Number:        #processSimpleData( $subbill.phoneNumber )
+    				</p>
+			</td>
+			<td class="intext">#if( $custType== 'E')Enterprise#end Customer ID</td>
+			<td class="intext">#processData( $bill.enterpriseCustomerId )</td>
+    		</tr>
+		<tr>
+			<td class="intext">Payment Customer ID</td>
+			<td class="intext">#processData( $bill.paymentCustomerId )</td>
+    		</tr>
+		<tr>
+			<tr>
+			<td class="intext">Account Number</td>
+			<td class="intext">#processData( $subbill.accountNumber )</td>
+    		</tr>
+		<tr>
+			<td class="intext">Phone Number</td>
+			<td class="intext">#processData( $subbill.phoneNumber )</td>
+    		</tr>
+	</table><br>
+    <label class="subtitle"
+		style="padding-left: 5px; font-size: 14px; font-weight: bold">Telephone
+		- #processSimpleData( $subbill.phoneNumber )</label>
+	<br><br>
+	<label class="subtitle"
+		style="padding-left: 5px; font-size: 14px; font-weight: bold">Itemised
+		Call Details</label>
+	<br>
+    <table width="100%" border="1" cellspacing="0" cellpadding="0">
+		<tr>
+			<td colspan="4"
+				style="padding-left: 5px; font-size: 13px; font-weight: bold; background-color: #dddddd">
+				Telephone Usage Charges</td>
+		</tr>
+		<tr>
+			<th>Type of Usage</th>
+			<th>Units</th>
+			<th>Duration</th>
+			<th>Charges (Rs.)</th>
+		</tr>
+        #set( $count = 1)
+		#foreach( $phoneUsage in $subbill.telephoneUsages )
+        <tr>
+			<td class="intext">#processSimpleData( $phoneUsage.typeOfUsage )</td>
+			<td class="intext">#processSimpleData( $phoneUsage.units )</td>
+			<td class="intext">#processSimpleData( $phoneUsage.duration )</td>
+			<td class="intext">$phoneUsage.charges</td>
+		</tr>
+		#end
+	</table>
+	<br>
+    <table width="100%" border="1px" cellspacing="0" cellpadding="0">
+		<tr>
+			<td colspan="6"
+				style="padding-left: 5px; font-size: 13px; font-weight: bold; background-color: #dddddd">OFFNET
+				Local</td>
+		</tr>
+		<tr>
+			<th>Date</th>
+			<th>Time</th>
+			<th>Called Number</th>
+			<th>Duration</th>
+			<th>Units</th>
+			<th>Charge (Rs.)</th>
+		</tr>
+		#foreach( $localUsage in $subbill.offnetLocalSummary )
+        <tr>
+			<td class="intext">#processSimpleData( $localUsage.date )</td>
+			<td class="intext">#processSimpleData( $localUsage.time )</td>
+			<td class="intext">#processSimpleData( $localUsage.calledNumber )</td>
+			<td class="intext">#processSimpleData( $localUsage.duration )</td>
+            <td class="intext">#processSimpleData( $localUsage.units )</td>
+			<td class="intext">$localUsage.charges</td>
+		</tr>
+		#end
+    </table>
+    <br>
+    <table width="100%" border="1px" cellspacing="0" cellpadding="0">
+		<tr>
+			<td colspan="6"
+				style="padding-left: 5px; font-size: 13px; font-weight: bold; background-color: #dddddd">OFFNET
+				STD Mobile</td>
+		</tr>
+		<tr>
+			<th>Date</th>
+			<th>Time</th>
+			<th>Called Number</th>
+			<th>Duration</th>
+			<th>Units</th>
+			<th>Charge (Rs.)</th>
+		</tr>
+        #foreach( $stdUsage in $subbill.offnetSTDSummary )
+        <tr>
+			<td class="intext">#processSimpleData( $stdUsage.date )</td>
+			<td class="intext">#processSimpleData( $stdUsage.time )</td>
+			<td class="intext">#processSimpleData( $stdUsage.calledNumber )</td>
+			<td class="intext">#processSimpleData( $stdUsage.duration )</td>
+            <td class="intext">#processSimpleData( $stdUsage.units )</td>
+			<td class="intext">$stdUsage.charges</td>
+		</tr>
+		#end
+	</table>
+	<br>
+    <table width="100%" border="1px" cellspacing="0" cellpadding="0">
+		<tr>
+			<td colspan="6"
+				style="padding-left: 5px; font-size: 13px; font-weight: bold; background-color: #dddddd">OFFNET
+				ISD</td>
+		</tr>
+		<tr>
+			<th>Date</th>
+			<th>Time</th>
+			<th>Called Number</th>
+			<th>Duration</th>
+			<th>Units</th>
+			<th>Charge (Rs.)</th>
+		</tr>
+        #foreach( $isdUsage in $subbill.offnetISDSummary )
+        <tr>
+			<td class="intext">#processSimpleData( $isdUsage.date )</td>
+			<td class="intext">#processSimpleData( $isdUsage.time )</td>
+			<td class="intext">#processSimpleData( $isdUsage.calledNumber )</td>
+			<td class="intext">#processSimpleData( $isdUsage.duration )</td>
+            <td class="intext">#processSimpleData( $isdUsage.units )</td>
+			<td class="intext">$isdUsage.charges</td>
+		</tr>
+	    #end
+	</table>
+    <br>
+    
+    </div>
+       
+    </div>
+    </div>
+#end
+	 #foreach( $mobileUsage in $bill.offnetMobileSummary )
+		#if( $velocityCount % 30 == 0 || $velocityCount==1)
+		#if( $velocityCount % 30 == 0)
+				
+</table>
+<br><br><br><br>
+		  </div>
+   </div>    
+    </div>
+	#end
+ <div class="page">
+        <div class="subpage"><div class="header">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td><img src="data: image/png;base64, $image_content " width="200" height="76" alt=""/></td>
+      <td style="text-align:center; font-family:arial; font-size:16px; font-weight:bold;">Andhra Pradesh State Fibernet Ltd.<br>
+			<span style="text-align:center; font-family:arial; font-size:14px; font-weight:bold;">( A Govt. of A.P Enterprise )</span></td>
+	  <td align="left" valign="top"><img src="data: image/png;base64, $image_content_1"  width="200" height="66" alt=""/></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+    <div class="mainbody">
+	 <table width="100%" border="1px" cellspacing="0" cellpadding="0">
+		<tr>
+			<td colspan="6"
+				style="padding-left: 5px; font-size: 13px; font-weight: bold; background-color: #dddddd">OFFNET
+				Landline</td>
+		</tr>
+		<tr>
+			<th>Date</th>
+			<th>Time</th>
+			<th>Called Number</th>
+			<th>Duration</th>
+			<th>Units</th>
+			<th>Charge (Rs.)</th>
+		</tr>
+            #end
+        <tr>
+			<td class="intext">#processSimpleData( $mobileUsage.date )</td>
+			<td class="intext">#processSimpleData( $mobileUsage.time )</td>
+			<td class="intext">#processSimpleData( $mobileUsage.calledNumber )</td>
+			<td class="intext">#processSimpleData( $mobileUsage.duration )</td>
+            <td class="intext">#processSimpleData( $mobileUsage.units )</td>
+			<td class="intext">$mobileUsage.charges</td>
+		</tr>
+	
+	#if($foreach.last)
+						
+</table>
+<br><br><br><br>
+		  </div>
+   </div>    
+    </div>
+	#end
+		#end	
+</body>
+</html>

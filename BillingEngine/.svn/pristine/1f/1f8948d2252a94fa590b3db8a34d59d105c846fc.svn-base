@@ -1,0 +1,19 @@
+
+
+COM-URL = http://172.16.4.72:8080/coms/
+
+COM-USERNAME = admin
+COM-PWD = admin
+
+UMS-URL=http://172.16.4.72:8080/ums/
+
+UMS-USERNAME=admin
+UMS-PWD=admin
+
+
+CORPUS-ALERTS-MESSAGES = http://iptv.apsfl.co.in:8080/appserver/rest/iptv/postnotification
+CORPUS-CALL-SAVE = http://iptv.apsfl.co.in:8080/appserver/rest/iptv/createPackage
+CORPUS-CALL-UPDATE = http://iptv.apsfl.co.in:8080/appserver/rest/iptv/modifyPackage
+CORPUS-CALL-TO-GET-CHANNELS = http://iptv.apsfl.co.in:8080/appserver/rest/iptv/getServices
+CORPUS-USERNAME = teraadmin
+CORPUS-API-KEY = 6ed73c1a-7817-49ab-b185-981f97cf5fd8
